@@ -9,6 +9,8 @@ from io import BytesIO
 from PIL import Image
 import time
 
+import requests
+
 from constants.global_constants import oauth2_scheme
 from utilities.media.media_utilities import generate_blurhash
 from utilities.token.token_utilities import decode_token
@@ -40,8 +42,8 @@ async def upload_file_async_user(file_path: str, file_key: str) -> tuple[str, st
         file=open(file_path, "rb"), file_name=file_name, options=options
     ))
 
-    return result.url, imagekit.url({
-        "path": f"{folder}/{file_name}",
+    return result.file_path, imagekit.url({
+        "path": result.file_path,
         "signed": True,
         "expire_seconds": 1200
     })
@@ -84,7 +86,6 @@ def extract_face(image_path, save_path):
     pil_image = Image.fromarray(face_image)
     pil_image.save(save_path)
     return True
-
 
 @common_router.post("/media")
 async def upload_media(
@@ -161,24 +162,19 @@ async def upload_media_user(
 
         file_key = f"media/{user_id}/{uuid.uuid4()}.webp"
         start_time = time.time()
-        file_url, signed_url = await upload_file_async_user(temp_file_path, file_key)
+        file_key_remote, signed_url = await upload_file_async_user(temp_file_path, file_key)
         logger_controller.info(f"Upload time for {file_key}: {time.time() - start_time:.2f}s")
 
         return {
-            "file_key": file_key,
             "media_type": media_type,
             "metadata": {
-                "file_url": file_url,
-                "signed_url": signed_url,
-                "width": float(width),
-                "height": float(height),
-                "blurhash": blurhash,
-                "format": "webp",
-                "size_bytes": len(webp_content),
+                "file_key": file_key_remote, 
+                "blurhash" : blurhash,
             },
         }
 
     except HTTPException as e:
+        logger_controller.warning(f"Unhandled upload error: {e}")
         logger_controller.warning(f"Upload error: {e}")
         raise
     except Exception as e:
@@ -208,7 +204,7 @@ async def generate_profile_picture(
 
         # Upload original image to imagekit
         original_file_key = f"media/{user_id}/{uuid.uuid4()}.jpg"
-        _, original_signed_url = await upload_file_async_user(input_path, original_file_key)
+        original_file_key_remote, original_signed_url = await upload_file_async_user(input_path, original_file_key)
 
         # Temp file for cropped face
         with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_face_file:
@@ -232,25 +228,19 @@ async def generate_profile_picture(
 
         # Upload profile picture (webp)
         profile_file_key = f"profile_pictures/{user_id}/pfp.webp"
-        blurhash = generate_blurhash(webp_content)
+        blurhash_pfp = generate_blurhash(webp_content)
+        blurhash_original_image = generate_blurhash(content)
 
         start_time = time.time()
-        profile_url, profile_signed_url = await upload_file_async_user(temp_file_path, profile_file_key)
+        profile_file_key_remote, profile_signed_url = await upload_file_async_user(temp_file_path, profile_file_key)
         logger_controller.info(f"PFP Upload time for {profile_file_key}: {time.time() - start_time:.2f}s")
 
         return {
-            "original_file_key": original_file_key,
-            "profile_file_key": profile_file_key,
-            "media_type": media_type,
+            "profile_metadata" : {"file_key": profile_file_key_remote, "blurhash" : blurhash_pfp},
+            "original_image_metadata" : {"file_key": original_file_key_remote, "blurhash" : blurhash_original_image},
+
             "original_image_url": original_signed_url,
             "profile_picture_url": profile_signed_url,
-            "metadata": {
-                "width": float(width),
-                "height": float(height),
-                "blurhash": blurhash,
-                "format": "webp",
-                "size_bytes": len(webp_content),
-            },
         }
 
     except HTTPException as e:
@@ -259,3 +249,72 @@ async def generate_profile_picture(
     except Exception as e:
         logger_controller.warning(f"Unhandled PFP upload error: {e}")
         raise HTTPException(status_code=500, detail="Something went wrong during profile picture upload.")
+
+@common_router.post("/media-user-pfp-from-url")
+async def generate_profile_picture_from_url(
+    image_url: str = Form(...),
+    token: str = Depends(oauth2_scheme),
+):
+    try:
+        user_id = decode_token(token)
+
+        # Download image from URL
+        response = requests.get(image_url)
+        if response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Unable to fetch image from URL")
+
+        content = response.content
+
+        # Validate image
+        try:
+            Image.open(BytesIO(content)).verify()
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid image file.")
+
+        # Save original image to temp file
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_input_file:
+            temp_input_file.write(content)
+            input_path = temp_input_file.name
+
+        # Temp file for cropped face
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_face_file:
+            face_path = temp_face_file.name
+
+        if not extract_face(input_path, face_path):
+            raise HTTPException(status_code=422, detail="No face detected in the image.")
+
+        # Read cropped face image bytes
+        with open(face_path, "rb") as f:
+            face_bytes = f.read()
+
+        # Convert face image to webp
+        loop = asyncio.get_event_loop()
+        temp_file_path, webp_content, width, height = await loop.run_in_executor(
+            None, process_image_to_webp_file, face_bytes
+        )
+
+        if len(webp_content) > MAX_FILE_SIZE_BYTES:
+            raise HTTPException(status_code=413, detail="Converted file too large.")
+
+        # Upload profile picture (webp)
+        profile_file_key = f"profile_pictures/{user_id}/pfp.webp"
+        blurhash_pfp = generate_blurhash(webp_content)
+
+        start_time = time.time()
+        profile_file_key_remote, profile_signed_url = await upload_file_async_user(temp_file_path, profile_file_key)
+        logger_controller.info(f"PFP Upload time from URL for {profile_file_key}: {time.time() - start_time:.2f}s")
+
+        return {
+            "profile_metadata": {
+                "file_key": profile_file_key_remote,
+                "blurhash": blurhash_pfp,
+            },
+            "profile_picture_url": profile_signed_url,
+        }
+
+    except HTTPException as e:
+        logger_controller.warning(f"PFP Upload from URL error: {e}")
+        raise
+    except Exception as e:
+        logger_controller.warning(f"Unhandled PFP upload from URL error: {e}")
+        raise HTTPException(status_code=500, detail="Something went wrong while processing the image URL.")

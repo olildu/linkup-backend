@@ -10,6 +10,7 @@ from models.update_request_model import UpdateRequestModel
 from constants.global_constants import ALGORITHM, SECRET_KEY, oauth2_scheme
 from utilities.token.token_utilities import decode_token
 from utilities.user.user_utilities import get_user_details
+from psycopg2.extras import Json
 
 user_router = APIRouter(prefix="/user")
 
@@ -92,14 +93,16 @@ async def update_user_metadata(body: UpdateRequestModel, token: str = Depends(oa
         cursor = conn.cursor()
 
         # Handle 'profile_picture' separately
-        # if 'profile_picture' in update_data:
-        #     profile_picture = update_data.pop("profile_picture")
-        #     if profile_picture and not isinstance(profile_picture, str):
-        #         raise HTTPException(status_code=400, detail="Invalid input: profile_picture")
-        #     cursor.execute(
-        #         "UPDATE users SET profile_picture = %s WHERE id = %s",
-        #         (profile_picture, user_id)
-        #     )
+        if 'profile_picture' in update_data:
+            profile_picture = update_data.get("profile_picture")
+            if profile_picture and not isinstance(profile_picture, dict):
+                raise HTTPException(status_code=400, detail="Invalid input: profile_picture")
+            cursor.execute(
+                "UPDATE users SET profile_picture = %s WHERE id = %s",
+                (Json(profile_picture), user_id)
+            )
+            conn.commit()
+            return {"message": "User metadata updated successfully"}
 
         # Update or insert other metadata
         for key, value in update_data.items():

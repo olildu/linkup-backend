@@ -3,24 +3,37 @@ from fastapi import HTTPException
 import psycopg2
 from models.user_model import UserModel
 from controllers.db_controller import conn
+from psycopg2.extras import Json
 
 def add_user_to_db(user: UserModel):
     cursor = None
-    user_id = None
+    user_id = user.id
+    print(user_id)
     try:
         cursor = conn.cursor()
 
         # Insert into users table
-        insert_user_query = """
-            INSERT INTO users (email, password_hash, gender, username, university_id, profile_picture)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            RETURNING id;
+        update_user_query = """
+            UPDATE users
+            SET
+                gender = %s,
+                username = %s,
+                university_id = %s,
+                profile_picture = %s,
+                is_profile_complete = %s
+            WHERE id = %s;
         """
         cursor.execute(
-            insert_user_query,
-            (user.email, user.hashed_password, user.gender, user.username, user.university_id, user.profile_picture),
+            update_user_query,
+            (
+                user.gender,
+                user.username,
+                user.university_id,
+                Json(user.profile_picture),
+                True,
+                user.id,
+            ),
         )
-        user_id = cursor.fetchone()[0]
 
         # Insert into user_preferences table
         insert_preference_query = """
@@ -41,7 +54,11 @@ def add_user_to_db(user: UserModel):
         metadata = user.model_dump()
         for key, value in metadata.items():
             if key not in ["email", "hashed_password", "gender", "id", "profile_picture", "username", "university_id", "interested_gender"]:
-                cursor.execute(insert_metadata_query, (user_id, key, str(value)))
+                if isinstance(value, (dict, list)):
+                    value = Json(value)
+                else:
+                    value = str(value)
+                cursor.execute(insert_metadata_query, (user_id, key, value))
 
         conn.commit()  
         return user_id

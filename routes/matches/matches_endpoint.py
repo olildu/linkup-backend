@@ -1,5 +1,6 @@
 from datetime import datetime
 from functools import partial
+import json
 from fastapi import APIRouter, Depends, HTTPException
 
 from controllers.db_controller import conn
@@ -7,6 +8,7 @@ from controllers.db_controller import conn
 from constants.global_constants import oauth2_scheme
 
 from models.connection_user_model import ConnectionChatModel, ConnectionMatchModel
+from utilities.common.common_utilites import get_signed_imagekit
 from utilities.exception.swipe.swipe_exceptions import handle_db_errors
 from utilities.matches.matches_utilities import get_last_message_timestamp, get_matches
 from utilities.token.token_utilities import decode_token
@@ -110,7 +112,7 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
 
         # Fetch user details for all connected users
         cursor.execute("""
-            SELECT id, username, profile_picture, gender, university_id
+            SELECT id, username, profile_picture::text, gender, university_id
             FROM users
             WHERE id = ANY(%s);
         """, (user_ids,))
@@ -122,6 +124,7 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
 
         for user_row in user_rows:
             id, username, profile_picture, gender, university_id = user_row
+            profile_picture = get_signed_imagekit(json.loads(profile_picture))
 
             if id in matches:
                 matches_users.append(

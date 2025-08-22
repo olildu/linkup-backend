@@ -43,6 +43,7 @@ def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None):
 def decode_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(token)
         return payload['id']
     except PyJWTError:
         logger_controller.warning("Invalid JWT token")

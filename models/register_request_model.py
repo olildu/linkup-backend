@@ -8,12 +8,10 @@ from models.user_model import UserModel
 
 class RegisterRequest(BaseModel):
     #Core
-    email: EmailStr
-    password: str
     username: str
     
-    university_id: int
-    profile_picture: str
+    university_year: int = 1
+    profile_picture: dict
 
     gender: Literal["Male", "Female"]
 
@@ -24,7 +22,7 @@ class RegisterRequest(BaseModel):
     university_major: str
     university_year: int
 
-    photos: list[str]
+    photos: list[dict]
     about: str
 
     currently_staying: Literal["Campus Hostel", "PG", "Home", "Flat", "Other"]
@@ -43,20 +41,6 @@ class RegisterRequest(BaseModel):
     drinking_status: Optional[bool] = None
 
     looking_for: Optional[Literal["Casual", "Open to anything", "Serious", "Friends", "Not sure yet"]] = None
-
-    @field_validator('password')
-    def password_strength(cls, v):
-        if len(v) < 8:
-            raise ValueError('Password must be at least 8 characters long')
-        if not re.search(r'[A-Z]', v):
-            raise ValueError('Password must contain at least one uppercase letter')
-        if not re.search(r'[a-z]', v):
-            raise ValueError('Password must contain at least one lowercase letter')
-        if not re.search(r'[0-9]', v):
-            raise ValueError('Password must contain at least one digit')
-        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
-            raise ValueError('Password must contain at least one special character')
-        return v
 
     @field_validator('dob')
     def check_age(cls, value):
@@ -97,8 +81,9 @@ class RegisterRequest(BaseModel):
             values['drinking_status'] = True
         return values
     
-    def to_user_model(self, hashed_password: str) -> UserModel:
+    def to_user_model(self, user_id: int) -> UserModel:
         return UserModel(
-            hashed_password=hashed_password,
+            id=user_id,
+            university_id=1,
             **self.model_dump()
         )

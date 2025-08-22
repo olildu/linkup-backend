@@ -3,8 +3,8 @@ from pydantic import BaseModel, model_validator
 
 class UpdateRequestModel(BaseModel):
     # Core
-    photos: Optional[list[str]] = None
-    profile_picture: Optional[str] = None
+    photos: Optional[list[dict]] = None
+    profile_picture: Optional[dict] = None
 
     about: Optional[str] = None
 

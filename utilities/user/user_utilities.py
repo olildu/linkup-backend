@@ -16,14 +16,11 @@ def get_user_details(user_id: int):
 
     # Fetch user from users table
     cursor.execute("""
-        SELECT id, email, username, gender, university_id, profile_picture, password_hash
+        SELECT id, email, username, gender, university_id, profile_picture::text, password_hash
         FROM users
         WHERE id = %s;
     """, (user_id,))
     user_row = cursor.fetchone()
-
-    # if (not user_row[2]):
-    #     return {'status' : 'require-signup'}
 
     if not user_row:
         raise HTTPException(status_code=404, detail="User not found")

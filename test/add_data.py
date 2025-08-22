@@ -1,49 +1,110 @@
 import random
-import json
+import string
 import requests
 from faker import Faker
 from datetime import date
 
 fake = Faker()
 
-genders = ["Male", "Female"]
-religions = ["Islam", "Sikhism", "Jainism", "Christianity", "Hinduism", "Buddhism", "Others"]
-smoking_options = ["Yes", "Trying to quit", "Occasionally", "No", "No, prefer non-smokers"]
-drinking_options = ["Yes", "Trying to quit", "Occasionally", "No", "No, prefer non-drinkers"]
-looking_for_options = ["Casual", "Open to anything", "Serious", "Friends", "Not sure yet"]
-staying_options = ["Campus Hostel", "PG", "Home", "Flat", "Other"]
-majors = ["Computer Science", "Mechanical Engineering", "Design", "Physics", "Psychology", "Law", "Economics"]
+# Utility to generate strong passwords
+def generate_strong_password(length=10):
+    while True:
+        password = ''.join(random.choices(string.ascii_letters + string.digits + "!@#$%^&*()_+", k=length))
+        if any(c in "!@#$%^&*()_+" for c in password):
+            return password
 
-def random_dob():
-    return fake.date_of_birth(minimum_age=18, maximum_age=25).isoformat()
+# Fixed media
+fixed_profile_picture = {
+    "file_key": "/profile_pictures/67/pfp_W4dOSZ860.webp",
+    "blurhash": "|dQ+Wpxu*0WB%gofayofV@MwaeMwoft7a}o#WBkCShj[WBWBofayRjj[kBxva}X8fQa$azjYj[j@xaj[WCazS5fkt7ayoLxuj[V[jZRkfkozfkozn%fQaxj@Rkf6t7aykCofj[WBfjkBayoLjZf6ofazWBj@j@ayofayf7"
+}
 
-def generate_user():
-    gender = random.choice(genders)
-    return {
-        "email": fake.email(),
-        "password": fake.password(special_chars=True, digits=True, upper_case=True, lower_case=True),
-        "username": fake.user_name(),
-        "dob": random_dob(),
+fixed_photos = [
+    {
+        "file_key": "/media/67/5c9d8d55-99a9-4fd7-9c62-6a476cfb6046.jpg",
+        "blurhash": "UGOwP]M|E4n$~q%1E1WBRixG-;WBNhxtNH%1"
+    },
+    {
+        "file_key": "/media/67/a7c49d2b-d92b-4688-9362-3b2036a6f456.jpg",
+        "blurhash": "UQG8Xpxu009F?bRjxuj[~q%Mxut7NHxuM{of"
+    }
+]
+
+def create_and_register_user():
+    # Fake user credentials
+    email = fake.email()
+    username = fake.user_name()
+    password = generate_strong_password()
+
+    print(f"\n➡️ Creating user {email}")
+
+    # 1. Signup
+    signup_resp = requests.post("http://localhost:8000/signup", json={
+        "email_hash": email,
+        "password": password
+    })
+    if signup_resp.status_code != 200:
+        print("❌ Signup failed:", signup_resp.text)
+        return
+
+    # 2. Trigger OTP (normally user gets email, here it's mocked)
+    requests.get(f"http://localhost:8000/verify-email?email={email}")
+
+    # 3. Mock OTP verification
+    otp_resp = requests.post("http://localhost:8000/verify-otp", json={
+        "email": email,
+        "otp": "123456"  # Replace this with real OTP if needed
+    })
+    if otp_resp.status_code != 200:
+        print("❌ OTP verification failed:", otp_resp.text)
+        return
+
+    email_hash = otp_resp.json().get("email_hash")
+    if not email_hash:
+        print("❌ No email_hash received")
+        return
+
+    # 4. Register full profile
+    headers = {"Authorization": f"Bearer {email_hash}"}
+    gender = random.choice(["Male", "Female"])
+    register_data = {
+        "dob": str(fake.date_of_birth(minimum_age=18, maximum_age=30)),
         "gender": gender,
-        "interested_gender": random.choice([g for g in genders if g != gender]),
-        "university_major": random.choice(majors),
-        "university_year": random.randint(1, 4),
-        "university_id": 1,
-        "photos": [f"https://picsum.photos/200/{random.randint(300, 350)}" for _ in range(random.randint(2, 4))],
-        "profile_picture": f"https://picsum.photos/seed/{fake.uuid4()}/200/200",
-        "about": fake.sentence(),
-        "currently_staying": random.choice(staying_options),
-        "hometown": fake.city(),
         "height": random.randint(150, 190),
-        "weight": random.randint(45, 85),
-        "religion": random.choice(religions),
-        "smoking_info": random.choice(smoking_options),
-        "drinking_info": random.choice(drinking_options),
-        "looking_for": random.choice(looking_for_options)
+        "weight": random.randint(50, 80),
+        "religion": random.choice(["Christianity", "Islam", "Hinduism"]),
+        "smokingInfo": random.choice(["Never", "Occasionally"]),
+        "drinkingInfo": random.choice(["Never", "Occasionally"]),
+        "lookingFor": random.choice(["Friendship", "Relationship"]),
+        "currentlyStaying": fake.city(),
+        "hometown": fake.city(),
+        "bio": fake.sentence(),
+        "profile_picture": fixed_profile_picture,
+        "photos": fixed_photos
     }
 
-users = [generate_user() for _ in range(40)]
+    register_resp = requests.post("http://localhost:8000/register", headers=headers, json=register_data)
+    if register_resp.status_code != 200:
+        print("❌ Register failed:", register_resp.text)
+        return
 
-for i, user in enumerate(users, 1):
-    response = requests.post("http://127.0.0.1:8000/register", json=user)
-    print(f"[{i}] Status: {response.status_code} | Response: {response.text}")
+    print("✅ Registered user successfully")
+
+    # 5. Login and fetch token
+    login_resp = requests.post("http://localhost:8000/token", data={
+        "username": email,
+        "password": password
+    })
+
+    if login_resp.status_code != 200:
+        print("❌ Login failed:", login_resp.text)
+        return
+
+    token = login_resp.json().get("access_token")
+    print(f"🔐 Login successful. Access token: {token[:20]}...")
+
+    # You can now use `Authorization: Bearer <token>` to access secure APIs
+
+# ▶️ Run for N users
+for _ in range(5):  # Change to any number of users
+    create_and_register_user()

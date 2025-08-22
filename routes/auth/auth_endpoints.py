@@ -29,10 +29,11 @@ async def signup(data: SignUpRequest):
     return add_partial_user_to_db(data)
 
 @auth_router.post("/register")
-async def register(data: RegisterRequest):
-    hashed_pw = hash_password(data.password)
-    user = data.to_user_model(hashed_pw)
-
+async def register(data: RegisterRequest, token: str = Depends(oauth2_scheme)):
+    user_id = decode_token(token=token)
+    print(user_id)
+    user = data.to_user_model(user_id=user_id)
+ 
     return {"msg": add_user_to_db(user)}
 
 @auth_router.post("/verify-otp")

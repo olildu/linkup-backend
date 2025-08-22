@@ -27,7 +27,7 @@ def get_last_message_timestamp(chat : ConnectionChatModel, chat_last_message : d
         return datetime.min  
 
 
-def get_matches(user_id: int = 17) -> MatchUserModel:
+def get_matches(user_id: int) -> MatchUserModel:
     cursor = conn.cursor()
 
     try:
@@ -93,7 +93,7 @@ def get_matches_by_preference(user: MatchUserModel, limit: int = 10, cursor: Psy
     matched_users = []
 
     query = f"""
-    SELECT DISTINCT users.id, users.username, users.gender, users.university_id, users.profile_picture
+    SELECT DISTINCT users.id, users.username, users.gender, users.university_id, users.profile_picture::text
     FROM users 
         where users.id IN %s
     """
@@ -104,7 +104,7 @@ def get_matches_by_preference(user: MatchUserModel, limit: int = 10, cursor: Psy
     matched_users += cursor.fetchall()
 
     query = f"""
-        SELECT DISTINCT users.id, users.username, users.gender, users.university_id, users.profile_picture
+        SELECT DISTINCT users.id, users.username, users.gender, users.university_id, users.profile_picture::text
         FROM users
         JOIN user_metadata metadata ON users.id = metadata.user_id
         WHERE users.university_id = %s

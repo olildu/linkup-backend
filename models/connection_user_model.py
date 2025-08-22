@@ -4,12 +4,12 @@ from pydantic import BaseModel
 class ConnectionMatchModel(BaseModel):
     id: int
     username: str
-    profile_picture: str
+    profile_picture: dict
 
 class ConnectionChatModel(BaseModel):
     id: int
     username: str
-    profile_picture: str
+    profile_picture: dict
     chat_room_id: int
     unseen_counter : int
 
