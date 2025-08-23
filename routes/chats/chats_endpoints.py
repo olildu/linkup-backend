@@ -103,7 +103,6 @@ class ChatRoomRequest(BaseModel):
 @handle_db_errors
 async def fetch_chats(request: Request, body: ChatRoomRequest, token: str = Depends(oauth2_scheme)):
     requesting_user_id = decode_token(token)
-    print(body.model_dump_json())
     # try:
     async with request.app.state.db_pool.acquire() as conn:
         # Validate participation

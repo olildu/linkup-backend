@@ -126,7 +126,6 @@ def get_matches_by_preference(user: MatchUserModel, limit: int = 10, cursor: Psy
 
 
     cursor.execute(query, params)
-    print(cursor.query)
 
     matched_users += cursor.fetchall()
 

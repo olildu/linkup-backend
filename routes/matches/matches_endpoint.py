@@ -1,10 +1,11 @@
 from datetime import datetime
 from functools import partial
 import json
+import traceback
 from fastapi import APIRouter, Depends, HTTPException
 
 from controllers.db_controller import conn
-
+from controllers.logger_controller import logger_controller
 from constants.global_constants import oauth2_scheme
 
 from models.connection_user_model import ConnectionChatModel, ConnectionMatchModel
@@ -160,7 +161,7 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
         }
 
     except Exception as e:
-        print(f"Failed to fetch connections {e}")
+        logger_controller.critical("Failed to fetch connections:\n%s", traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
 
     finally:

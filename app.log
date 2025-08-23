@@ -1,0 +1,17 @@
+[2025-08-23 12:42:29,284] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 211 (127.0.0.1) connected to connections websocket.
+[2025-08-23 12:42:29,353] [CRITICAL] matches_endpoint.py:164 in return_connections() - Failed to fetch connections:
+Traceback (most recent call last):
+  File "/home/olildus/Desktop/Personal/linkup-revanced/linkup-backend/routes/matches/matches_endpoint.py", line 128, in return_connections
+    profile_picture = get_signed_imagekit(json.loads(profile_picture))
+                                          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 339, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2025-08-23 12:45:16,587] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.
+[2025-08-23 12:45:17,893] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-23 12:45:18,085] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 211 (127.0.0.1) connected to connections websocket.
+[2025-08-23 12:45:39,354] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.
+[2025-08-23 12:45:40,886] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 211 (127.0.0.1) connected to connections websocket.
+[2025-08-23 14:18:05,269] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.

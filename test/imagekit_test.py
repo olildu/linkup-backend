@@ -16,8 +16,6 @@ upload = imagekit.upload(
     file=open('test/face.webp', "rb"), file_name='face.webp', options=options
 )
 
-print(upload.file_path)
-
 # # Generate signed URL
 # signed_url = imagekit.url({
 #     "path": file_path,
