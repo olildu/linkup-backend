@@ -1,6 +1,6 @@
 import asyncio
 import tempfile
-import face_recognition
+import cv2
 from fastapi import APIRouter, Depends, File, Form, UploadFile, HTTPException, BackgroundTasks
 from imagekitio.models.UploadFileRequestOptions import UploadFileRequestOptions
 from enum import Enum
@@ -73,19 +73,40 @@ def process_image_to_webp_file(content: bytes) -> tuple[str, bytes, int, int]:
 
     return temp_file_path, webp_content, width, height
 
-def extract_face(image_path, save_path):
-    image = face_recognition.load_image_file(image_path)
-    face_locations = face_recognition.face_locations(image)
-
-    if not face_locations:
+def extract_face(image_path, save_path, PADDING = 50):
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    
+    # Read image
+    img = cv2.imread(image_path)
+    if img is None:
+        print("Image not found.")
+        return False
+    
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # Detect faces
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+    
+    if len(faces) == 0:
         print("No face detected.")
         return False
-
-    top, right, bottom, left = face_locations[0]
-    face_image = image[top:bottom, left:right]
-    pil_image = Image.fromarray(face_image)
+    
+    # Take first face only
+    x, y, w, h = faces[0]
+    
+    # Apply padding and ensure bounds
+    x1 = max(0, x - PADDING)
+    y1 = max(0, y - PADDING)
+    x2 = min(img.shape[1], x + w + PADDING)
+    y2 = min(img.shape[0], y + h + PADDING)
+    
+    # Crop and save
+    face_img = img[y1:y2, x1:x2]
+    pil_image = Image.fromarray(cv2.cvtColor(face_img, cv2.COLOR_BGR2RGB))
     pil_image.save(save_path)
+    
     return True
+
 
 @common_router.post("/media")
 async def upload_media(

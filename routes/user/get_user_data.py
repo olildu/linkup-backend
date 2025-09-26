@@ -1,5 +1,5 @@
 import time
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, status
 import jwt
 import psycopg2
 from jwt import PyJWTError
@@ -70,7 +70,11 @@ async def get_user_preferences(token: str = Depends(oauth2_scheme)):
         cursor.close()
 
 @user_router.post("/update/metadata")
-async def update_user_metadata(body: UpdateRequestModel, token: str = Depends(oauth2_scheme)):
+async def update_user_metadata(
+    update_pfp: bool = False,                      
+    body: UpdateRequestModel = Body(...),          
+    token: str = Depends(oauth2_scheme)            
+):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id = payload.get("id")
@@ -93,7 +97,7 @@ async def update_user_metadata(body: UpdateRequestModel, token: str = Depends(oa
         cursor = conn.cursor()
 
         # Handle 'profile_picture' separately
-        if 'profile_picture' in update_data:
+        if 'profile_picture' in update_data and update_pfp:
             profile_picture = update_data.get("profile_picture")
             if profile_picture and not isinstance(profile_picture, dict):
                 raise HTTPException(status_code=400, detail="Invalid input: profile_picture")
@@ -109,8 +113,9 @@ async def update_user_metadata(body: UpdateRequestModel, token: str = Depends(oa
             cursor.execute("SELECT 1 FROM user_metadata WHERE user_id = %s AND key = %s", (user_id, key))
             exists = cursor.fetchone()
             if exists:
+                query = "UPDATE user_metadata SET value = %s WHERE user_id = %s AND key = %s"
                 cursor.execute(
-                    "UPDATE user_metadata SET value = %s WHERE user_id = %s AND key = %s",
+                    query,
                     (str(value), user_id, key)
                 )
             else:
@@ -140,7 +145,7 @@ async def update_user_preferences(body: PreferenceModel, token: str = Depends(oa
 
     try:
         for key, value in body.model_dump().items():
-            # Now delete if value is None (null)
+            # Delete if value is None (null)
             if value is None or value == "Don't mind":
                 cursor.execute('''
                     DELETE FROM user_preferences

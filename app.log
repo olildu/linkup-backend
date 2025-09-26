@@ -15,3 +15,202 @@ TypeError: the JSON object must be str, bytes or bytearray, not NoneType
 [2025-08-23 12:45:39,354] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.
 [2025-08-23 12:45:40,886] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 211 (127.0.0.1) connected to connections websocket.
 [2025-08-23 14:18:05,269] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.
+[2025-08-24 00:51:21,469] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 211 (127.0.0.1) connected to connections websocket.
+[2025-08-24 00:51:35,267] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 211 disconnected from connections websocket.
+[2025-08-24 00:53:08,851] [INFO] common_endpoints.py:257 in generate_profile_picture() - PFP Upload time for profile_pictures/491/pfp.webp: 2.69s
+[2025-08-24 00:53:11,633] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/491/8d1844ad-a58b-47b9-8343-5ce8f6fad02f.webp: 2.67s
+[2025-08-24 00:53:25,012] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 491 (127.0.0.1) connected to connections websocket.
+[2025-08-24 01:05:27,577] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 491 disconnected from connections websocket.
+[2025-08-25 22:59:57,533] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-25 23:00:05,237] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 491 (127.0.0.1) connected to connections websocket.
+[2025-08-25 23:00:53,329] [INFO] lobby_websocket_endpoints.py:222 in websocket_endpoint() - User 491 (127.0.0.1) connected to lobby websocket.
+[2025-08-25 23:00:55,435] [INFO] lobby_websocket_endpoints.py:239 in websocket_endpoint() - User 491 disconnected from lobby websocket.
+[2025-08-25 23:01:44,899] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 491 disconnected from connections websocket.
+[2025-08-26 01:26:04,549] [INFO] common_endpoints.py:257 in generate_profile_picture() - PFP Upload time for profile_pictures/492/pfp.webp: 3.21s
+[2025-08-26 01:26:07,825] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/492/9788bb5f-7617-4e20-ba03-9a474fae8ef1.webp: 3.16s
+[2025-08-26 01:26:22,453] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 492 (127.0.0.1) connected to connections websocket.
+[2025-08-26 01:26:30,183] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 492 disconnected from connections websocket.
+[2025-08-28 02:03:48,148] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 02:03:48,506] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 492 (127.0.0.1) connected to connections websocket.
+[2025-08-28 02:04:43,631] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 492 disconnected from connections websocket.
+[2025-08-28 02:07:18,244] [INFO] common_endpoints.py:257 in generate_profile_picture() - PFP Upload time for profile_pictures/493/pfp.webp: 3.44s
+[2025-08-28 02:07:20,911] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/ac1d1e05-194c-4ff7-8adc-63d4516be905.webp: 2.54s
+[2025-08-28 02:08:06,864] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 02:11:18,948] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 528
+[2025-08-28 02:11:18,959] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 528
+[2025-08-28 02:11:19,843] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 532
+[2025-08-28 02:11:19,852] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 532
+[2025-08-28 02:11:20,672] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 537
+[2025-08-28 02:11:20,683] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 537
+[2025-08-28 02:11:21,568] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 543
+[2025-08-28 02:11:21,578] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 543
+[2025-08-28 02:11:22,439] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 513
+[2025-08-28 02:11:22,450] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 513
+[2025-08-28 02:11:23,200] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 516
+[2025-08-28 02:11:23,210] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 516
+[2025-08-28 02:11:23,988] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 535
+[2025-08-28 02:11:23,998] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 535
+[2025-08-28 02:11:25,733] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 494
+[2025-08-28 02:11:25,743] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 494
+[2025-08-28 02:11:26,560] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 527
+[2025-08-28 02:11:26,570] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 527
+[2025-08-28 02:11:27,382] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 495
+[2025-08-28 02:11:27,392] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 495
+[2025-08-28 02:11:45,308] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 02:12:01,405] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 02:40:14,023] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 02:40:14,033] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 02:40:14,730] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 515
+[2025-08-28 02:40:14,733] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 515
+[2025-08-28 02:40:15,491] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 539
+[2025-08-28 02:40:15,494] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 539
+[2025-08-28 02:40:16,337] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 506
+[2025-08-28 02:40:16,347] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 506
+[2025-08-28 02:40:17,097] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 536
+[2025-08-28 02:40:17,109] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 536
+[2025-08-28 02:40:17,870] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 538
+[2025-08-28 02:40:17,880] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 538
+[2025-08-28 02:40:18,618] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 529
+[2025-08-28 02:40:18,628] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 529
+[2025-08-28 02:40:19,397] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 498
+[2025-08-28 02:40:19,400] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 498
+[2025-08-28 19:46:22,873] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 19:46:23,036] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:00:00,008] [INFO] lobby_websocket_endpoints.py:182 in start_waiting_period() - Starting meet at 8
+[2025-08-28 20:05:00,009] [INFO] lobby_websocket_endpoints.py:196 in start_waiting_period() - 5-minute wait over. Running matchmaking.
+[2025-08-28 20:05:00,010] [INFO] lobby_websocket_endpoints.py:30 in get_lobby_users() - No users connected to lobby websocket.
+[2025-08-28 20:05:16,549] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:05:17,653] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 20:05:18,153] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (172.20.10.2) connected to connections websocket.
+[2025-08-28 20:29:13,770] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 20:30:24,744] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:34:32,766] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:36:41,528] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:36:46,540] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:37:07,296] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:37:12,304] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:37:36,290] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/ad57a309-0117-4d2c-918e-42894ea66c4b.webp: 4.81s
+[2025-08-28 20:37:36,426] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/63afcf9b-81a3-4f97-9478-9a09b0bb1644.webp: 3.58s
+[2025-08-28 20:37:36,480] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/282dc3e4-5ace-4c6c-840e-161cf70341b1.webp: 3.03s
+[2025-08-28 20:37:40,009] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/8f6b5f31-2801-4063-a164-3317d17864d4.webp: 3.44s
+[2025-08-28 20:38:10,177] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:38:15,183] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:38:16,735] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/bf162205-42f7-44c9-8a7d-0957b70a1375.webp: 3.30s
+[2025-08-28 20:38:17,864] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/711f15d8-3181-4414-ac42-73017a24fad1.webp: 3.11s
+[2025-08-28 20:38:18,782] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/06efbe9a-53ea-47fe-9811-d69117284db0.webp: 3.87s
+[2025-08-28 20:38:22,162] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/08e3f522-259d-4168-b074-a74967764c2f.webp: 3.30s
+[2025-08-28 20:38:32,445] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:38:37,814] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-28 20:39:00,661] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-28 20:39:29,888] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 20:39:29,889] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 21:35:52,974] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-28 21:35:53,142] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (10.171.156.162) connected to connections websocket.
+[2025-08-28 23:00:43,421] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:37:16,986] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:38:01,637] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/b8acd474-069e-4b34-a43d-48c841d105f6.webp: 3.47s
+[2025-08-29 11:38:04,112] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/52985ca8-d349-484f-95a8-e99269d23909.webp: 3.29s
+[2025-08-29 11:38:04,126] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/bd2941d1-2cfa-4ee7-8d75-7cbff6a6ad23.webp: 3.02s
+[2025-08-29 11:38:07,212] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/5672de9e-b945-465c-8146-a7652e736978.webp: 2.98s
+[2025-08-29 11:38:14,075] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:38:18,339] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:39:03,807] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/0361d1df-30d2-4dd1-9906-d6200a106334.webp: 2.90s
+[2025-08-29 11:39:04,936] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/e04ce0ee-0596-4601-9e93-cdddbac54ea3.webp: 2.74s
+[2025-08-29 11:39:05,349] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/b7f78e4d-995b-4ae1-9808-5be0de661019.webp: 3.59s
+[2025-08-29 11:39:09,338] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/917191ab-fcd8-4344-8a8a-576ab561c7d0.webp: 4.22s
+[2025-08-29 11:39:24,904] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/b378bf38-d7d0-401b-9e56-9e2622e800a0.webp: 2.66s
+[2025-08-29 11:39:28,180] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/9dee4902-5c34-4305-adc5-d78a1b84fd1e.webp: 3.18s
+[2025-08-29 11:39:31,046] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/6b00c2ff-432f-4042-87e4-803fbf3ecc74.webp: 2.78s
+[2025-08-29 11:40:48,055] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/ce70b31d-7d7d-4092-b77e-8ac4145f1da8.webp: 3.86s
+[2025-08-29 11:40:51,329] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/353985c4-7d9a-4d5d-9b2a-bb509066056d.webp: 3.18s
+[2025-08-29 11:40:54,502] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/aa0bf71a-677f-4864-ac32-9f77356286a0.webp: 3.09s
+[2025-08-29 11:40:57,783] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/684b8530-b399-46db-b745-80ea4106165e.webp: 3.24s
+[2025-08-29 11:43:38,860] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/2f65cddc-6426-43d0-95fc-ff604b3fdaf2.webp: 3.17s
+[2025-08-29 11:43:39,057] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/098d1ce3-8094-4578-a8ec-972e0d5891af.webp: 3.04s
+[2025-08-29 11:43:42,132] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/a641180e-9fae-420d-9acb-4f64eda172db.webp: 3.04s
+[2025-08-29 11:43:51,078] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:43:52,311] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:44:00,624] [WARNING] common_endpoints.py:337 in generate_profile_picture_from_url() - PFP Upload from URL error: 422: No face detected in the image.
+[2025-08-29 11:44:01,004] [WARNING] common_endpoints.py:337 in generate_profile_picture_from_url() - PFP Upload from URL error: 422: No face detected in the image.
+[2025-08-29 11:44:01,005] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:44:04,557] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:45:23,477] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:45:24,657] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:45:45,168] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/9b90d0b8-4d94-4204-a36d-8427151fbf7b.webp: 7.43s
+[2025-08-29 11:45:53,823] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/ded465c7-42f1-47ea-8597-3c899bcb8208.webp: 4.38s
+[2025-08-29 11:45:55,279] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:45:58,532] [INFO] common_endpoints.py:326 in generate_profile_picture_from_url() - PFP Upload time from URL for profile_pictures/493/pfp.webp: 3.22s
+[2025-08-29 11:46:00,031] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:48:30,659] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-29 11:48:30,659] [WARNING] common_endpoints.py:198 in upload_media_user() - Unhandled upload error: 401: Invalid token
+[2025-08-29 11:48:30,659] [WARNING] common_endpoints.py:199 in upload_media_user() - Upload error: 401: Invalid token
+[2025-08-29 11:48:35,336] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/00066306-03f9-4f1d-8060-2731f8497e55.webp: 4.56s
+[2025-08-29 11:48:38,582] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/2d462ad8-32cc-4d8d-9980-9744f81ddc25.webp: 3.26s
+[2025-08-29 11:48:38,990] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/f942c9d8-2a7f-4d93-a662-9857e70d3849.webp: 2.50s
+[2025-08-29 11:48:41,473] [WARNING] common_endpoints.py:337 in generate_profile_picture_from_url() - PFP Upload from URL error: 422: No face detected in the image.
+[2025-08-29 11:48:41,474] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:48:45,563] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:49:07,807] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-29 11:49:08,955] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-29 11:49:17,188] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/32bde99d-b86c-4145-aff3-7bef3d560f1e.webp: 2.53s
+[2025-08-29 11:49:22,419] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/8ceed439-9ef8-46fe-88c2-dd15443a60cb.webp: 2.72s
+[2025-08-29 11:49:22,846] [WARNING] common_endpoints.py:337 in generate_profile_picture_from_url() - PFP Upload from URL error: 422: No face detected in the image.
+[2025-08-29 11:51:47,243] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 01:09:35,791] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 01:09:35,927] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-30 01:09:43,358] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 523
+[2025-08-30 01:09:43,395] [INFO] swipe_endpoint.py:109 in dislike_swipe() - User 493 disliked user 523
+[2025-08-30 01:09:43,975] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 522
+[2025-08-30 01:09:44,003] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 522
+[2025-08-30 01:09:44,823] [INFO] lobby_websocket_endpoints.py:222 in websocket_endpoint() - User 493 (127.0.0.1) connected to lobby websocket.
+[2025-08-30 20:07:51,313] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 20:07:51,458] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-30 20:24:29,275] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 20:28:50,573] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 20:28:55,598] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (127.0.0.1) connected to connections websocket.
+[2025-08-30 20:44:29,700] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 20:44:40,512] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 20:44:40,513] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 20:44:40,514] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 21:03:37,014] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 21:03:42,053] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 23:16:16,687] [WARNING] token_utilities.py:52 in decode_token() - Invalid JWT token
+[2025-08-30 23:16:16,929] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (172.20.10.2) connected to connections websocket.
+[2025-08-30 23:22:06,958] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:33:32,452] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:34:07,293] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:34:11,184] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:34:21,108] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:34:45,056] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:34:47,518] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:34:52,850] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:35:17,751] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:36:43,023] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:36:52,382] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:39:57,653] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:40:05,282] [INFO] lobby_websocket_endpoints.py:222 in websocket_endpoint() - User 493 (202.131.155.130) connected to lobby websocket.
+[2025-08-30 23:40:07,735] [INFO] lobby_websocket_endpoints.py:239 in websocket_endpoint() - User 493 disconnected from lobby websocket.
+[2025-08-30 23:40:56,434] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:41:02,118] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:41:04,817] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.
+[2025-08-30 23:41:30,174] [INFO] common_endpoints.py:187 in upload_media_user() - Upload time for media/493/00ca9315-b99e-4f06-b12c-7529beedebd4.webp: 5.52s
+[2025-08-30 23:42:06,328] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 496
+[2025-08-30 23:42:06,331] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 496
+[2025-08-30 23:42:07,653] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 503
+[2025-08-30 23:42:07,663] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 503
+[2025-08-30 23:42:07,663] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 510
+[2025-08-30 23:42:07,664] [INFO] swipe_endpoint.py:109 in dislike_swipe() - User 493 disliked user 510
+[2025-08-30 23:42:08,169] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 531
+[2025-08-30 23:42:08,178] [INFO] swipe_endpoint.py:109 in dislike_swipe() - User 493 disliked user 531
+[2025-08-30 23:42:08,675] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 501
+[2025-08-30 23:42:08,685] [INFO] swipe_endpoint.py:109 in dislike_swipe() - User 493 disliked user 501
+[2025-08-30 23:42:10,825] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 525
+[2025-08-30 23:42:10,835] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 525
+[2025-08-30 23:42:11,365] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 504
+[2025-08-30 23:42:11,374] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 504
+[2025-08-30 23:42:44,207] [INFO] swipe_utilities.py:16 in exists_in_queue() - User 493 exists in match queue for user 511
+[2025-08-30 23:42:44,217] [INFO] swipe_endpoint.py:84 in like_swipe() - User 493 liked user 511
+[2025-08-30 23:42:51,987] [INFO] lobby_websocket_endpoints.py:222 in websocket_endpoint() - User 493 (202.131.155.130) connected to lobby websocket.
+[2025-08-30 23:42:55,163] [INFO] lobby_websocket_endpoints.py:239 in websocket_endpoint() - User 493 disconnected from lobby websocket.
+[2025-08-30 23:43:03,152] [INFO] connections_websocket_endpoints.py:61 in websocket_endpoint() - User 493 (202.131.155.130) connected to connections websocket.
+[2025-08-30 23:43:09,396] [INFO] connections_websocket_endpoints.py:74 in websocket_endpoint() - User 493 disconnected from connections websocket.

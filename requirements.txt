@@ -21,5 +21,4 @@ asyncpg
 brevo_python 
 redis
 imagekitio
-face_recognition
-git+https://github.com/ageitgey/face_recognition_models.git
+opencv-python
