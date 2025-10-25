@@ -1,5 +1,4 @@
 import asyncio
-from datetime import datetime
 from fastapi import FastAPI
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -19,7 +18,6 @@ from routes.chats.chat_websocket_endpoints import chatsocket_router
 from routes.matches.connections_websocket_endpoints import connectionsocket_router
 from routes.matches.lobby.lobby_websocket_endpoints import lobbysocket_router, start_waiting_period
 
-# Use IST timezone
 ist = timezone("Asia/Kolkata")
 scheduler = BackgroundScheduler(timezone=ist)
 

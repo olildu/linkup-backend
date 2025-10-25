@@ -2,6 +2,7 @@ import asyncio
 from fastapi import APIRouter, Depends
 from constants.global_constants import oauth2_scheme
 from routes.matches.connections_websocket_endpoints import DataModel, send_event_to_user_connection
+from utilities.common.common_utilites import get_signed_imagekit
 from utilities.exception.swipe.swipe_exceptions import assert_in_match_queue, handle_db_errors
 from utilities.swipe.swipe_utilities import handle_post_action, update_discovery_and_post_action
 from utilities.token.token_utilities import decode_token
@@ -69,7 +70,7 @@ async def like_swipe(body: SwipeRequest, token: str = Depends(oauth2_scheme)):
                 "matched_user": {
                     "id": match_user[0],
                     "username": match_user[1],
-                    "profile_picture": match_user[2]
+                    "profile_picture": get_signed_imagekit(match_user[2])
                 }
             }
 

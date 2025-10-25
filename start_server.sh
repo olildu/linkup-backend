@@ -25,4 +25,4 @@ cd "$PROJECT_DIR"
 # Execute uvicorn using the virtual environment's executable
 # This command runs the server in the foreground, which is what launchd expects.
 # All output will be redirected by launchd to the log files.
-"$VENV_UVICORN_PATH" "$APP_MODULE" --host 0.0.0.0 --port 8000
+"$VENV_UVICORN_PATH" "$APP_MODULE" --host 0.0.0.0 --port 8002 --reload
