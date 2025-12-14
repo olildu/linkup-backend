@@ -14,7 +14,7 @@ VENV_PYTHON_PATH="$PROJECT_DIR/venv/bin/python"
 VENV_UVICORN_PATH="$PROJECT_DIR/venv/bin/uvicorn"
 
 # The main application file and instance (e.g., main.py with an app instance named `app`)
-APP_MODULE="main:app"
+APP_MODULE="app.main:app"
 
 # --- Execution ---
 echo "Starting FastAPI server..." >> /var/log/linkup-backend.log
