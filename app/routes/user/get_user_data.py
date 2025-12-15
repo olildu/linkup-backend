@@ -1,8 +1,11 @@
 import time
-from fastapi import APIRouter, Body, Depends, HTTPException, status
 import jwt
+import uuid
 import psycopg2
+
 from jwt import PyJWTError
+from datetime import datetime
+from fastapi import APIRouter, Body, Depends, HTTPException, status
 
 from app.controllers.db_controller import conn
 from app.models.preference_model import PreferenceModel
@@ -13,6 +16,44 @@ from app.utilities.user.user_utilities import get_user_details
 from psycopg2.extras import Json
 
 user_router = APIRouter(prefix="/user")
+
+@user_router.delete("/delete")
+async def delete_account(token: str = Depends(oauth2_scheme)):
+    user_id = decode_token(token)
+    cursor = conn.cursor()
+
+    try:
+        # 1. Anonymize user data
+        # We append timestamp + uuid to email to keep it unique but anonymous
+        anonymized_email = f"deleted_{int(datetime.now().timestamp())}_{uuid.uuid4()}@linkup.com"
+        
+        cursor.execute("""
+            UPDATE users
+            SET 
+                username = 'Deleted Account',
+                email = %s,
+                profile_picture = NULL,
+                password_hash = 'deleted',
+                is_deleted = TRUE
+            WHERE id = %s
+        """, (anonymized_email, user_id))
+
+        # 2. Clear sensitive metadata
+        cursor.execute("DELETE FROM user_metadata WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_preferences WHERE user_id = %s", (user_id,))
+        
+        # 3. Remove from discovery pool so they stop appearing in cards
+        cursor.execute("DELETE FROM user_discovery_pool WHERE user_id = %s", (user_id,))
+
+        conn.commit()
+        return {"message": "Account deleted successfully"}
+
+    except Exception as e:
+        conn.rollback()
+        print(f"Error deleting account: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete account")
+    finally:
+        cursor.close()
 
 @user_router.get("/get/detail/{user_id}")
 async def get_user_data(user_id: int, token: str = Depends(oauth2_scheme)):

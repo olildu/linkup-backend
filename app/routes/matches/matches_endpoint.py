@@ -113,7 +113,7 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
 
         # Fetch user details for all connected users
         cursor.execute("""
-            SELECT id, username, profile_picture::text, gender, university_id
+            SELECT id, username, profile_picture::text, gender, university_id, is_deleted
             FROM users
             WHERE id = ANY(%s);
         """, (user_ids,))
@@ -124,15 +124,21 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
         chats_users = []
 
         for user_row in user_rows:
-            id, username, profile_picture, gender, university_id = user_row
-            profile_picture = get_signed_imagekit(json.loads(profile_picture))
+            # CHANGE: Unpack 6 values instead of 5
+            id, username, profile_picture, gender, university_id, is_deleted = user_row
+            
+            # Handle potentially NULL profile picture for deleted users
+            profile_picture_dict = json.loads(profile_picture) if profile_picture else None
+            if profile_picture_dict:
+                profile_picture_dict = get_signed_imagekit(profile_picture_dict)
 
             if id in matches:
                 matches_users.append(
                     ConnectionMatchModel(
                         id=id,
                         username=username,
-                        profile_picture=profile_picture,
+                        profile_picture=profile_picture_dict,
+                        is_deleted=is_deleted # Pass flag
                     )
                 )
 
@@ -142,11 +148,12 @@ async def return_connections(token: str = Depends(oauth2_scheme)):
                     ConnectionChatModel(
                         id=id,
                         username=username,
-                        profile_picture=profile_picture,
+                        profile_picture=profile_picture_dict,
                         chat_room_id=chats[id],
                         unseen_counter=chat_unseen_count.get(chats[id], 0),
                         last_message=last_msg_info["message"],
-                        last_message_media_type=last_msg_info["media_type"], 
+                        last_message_media_type=last_msg_info["media_type"],
+                        is_deleted=is_deleted # Pass flag
                     )
                 )
 
