@@ -93,7 +93,7 @@ def reset_user_password(data: SignUpRequest):
 def send_otp_email(to_email: str, otp: str):
     html = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
-        <h2 style="color: #2a2a2a;">🔐 Your LinkUp OTP Code</h2>
+        <h2 style="color: #2a2a2a;">🔐 Your linkup OTP Code</h2>
         <p style="font-size: 16px; color: #333;">
             Hello, your one-time password (OTP) is:
         </p>
@@ -105,13 +105,13 @@ def send_otp_email(to_email: str, otp: str):
         </p>
         <hr style="margin: 30px 0;">
         <footer style="font-size: 12px; color: #888; text-align: center;">
-            LinkUp — more than just classmates<br>
+            linkup — more than just classmates<br>
             If you didn’t request this, you can safely ignore this email.
         </footer>
     </div>
     """
     payload = brevo_python.SendSmtpEmail(
-        sender={"name": "LinkUp OTP", "email": 'ebin67891234@gmail.com'},
+        sender={"name": "linkup OTP", "email": 'ebin67891234@gmail.com'},
         to=[{"email": to_email}],
         subject="Your OTP Code",
         html_content=html
@@ -122,7 +122,7 @@ def send_otp_email(to_email: str, otp: str):
         raise HTTPException(status_code=500, detail=f"Email send failed: {e.body}")
     
 def generate_otp():
-    # return str(random.randint(100000, 999999))
+    return str(random.randint(100000, 999999))
     return 123456
 
 def retrieve_otp_email(data : EmailOTPData):

@@ -1,9 +1,12 @@
 import asyncio
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pytz import timezone
 from contextlib import asynccontextmanager
+import os
 
 from app.controllers.db_controller import create_pool
 from app.routes.chats.chats_endpoints import chats_router
@@ -44,14 +47,46 @@ async def lifespan(app: FastAPI):
     
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(auth_router)
-app.include_router(user_router)
-app.include_router(swipe_route)
-app.include_router(matches_router)
-app.include_router(chats_router)
-app.include_router(common_router)
-app.include_router(location_router)
+# --- API ROUTERS (v1) ---
+# All REST API endpoints are now prefixed with /api/v1
+api_v1_prefix = "/api/v1"
 
-app.include_router(chatsocket_router) 
-app.include_router(lobbysocket_router)
-app.include_router(connectionsocket_router)
+app.include_router(auth_router, prefix=api_v1_prefix)
+app.include_router(user_router, prefix=api_v1_prefix)
+app.include_router(swipe_route, prefix=api_v1_prefix)
+app.include_router(matches_router, prefix=api_v1_prefix)
+app.include_router(chats_router, prefix=api_v1_prefix)
+app.include_router(common_router, prefix=api_v1_prefix)
+app.include_router(location_router, prefix=api_v1_prefix)
+
+# --- WEBSOCKET ROUTERS ---
+app.include_router(chatsocket_router, prefix=api_v1_prefix) 
+app.include_router(lobbysocket_router, prefix=api_v1_prefix)
+app.include_router(connectionsocket_router, prefix=api_v1_prefix)
+
+# --- STATIC FILES & LANDING PAGE ---
+# Ensure the 'static' folder exists in your root directory
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+async def read_index():
+    return FileResponse('static/index.html')
+
+@app.get("/terms")
+async def read_terms():
+    return FileResponse('static/terms.html')
+
+@app.get("/privacy")
+async def read_privacy():
+    return FileResponse('static/privacy_policy.html')
+
+@app.get("/delete-account")
+async def read_delete_account():
+    return FileResponse('static/delete_account.html')
+
+@app.get("/child-safety")
+async def read_delete_account():
+    return FileResponse('static/child-safety.html')

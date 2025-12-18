@@ -8,7 +8,9 @@ from datetime import datetime
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 
 from app.controllers.db_controller import conn
+from app.models.block_user_request import BlockUserRequest
 from app.models.preference_model import PreferenceModel
+from app.models.report_user_request import ReportUserRequest
 from app.models.update_request_model import UpdateRequestModel
 from app.constants.global_constants import ALGORITHM, SECRET_KEY, oauth2_scheme
 from app.utilities.token.token_utilities import decode_token
@@ -16,6 +18,27 @@ from app.utilities.user.user_utilities import get_user_details
 from psycopg2.extras import Json
 
 user_router = APIRouter(prefix="/user")
+
+@user_router.post("/report")
+async def report_user(body: ReportUserRequest, token: str = Depends(oauth2_scheme)):
+    reporter_id = decode_token(token)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO reported_users (reporter_id, reported_id, reason)
+            VALUES (%s, %s, %s)
+        """, (reporter_id, body.reported_user_id, body.reason))
+
+        conn.commit()
+        return {"message": "User reported successfully"}
+
+    except Exception as e:
+        conn.rollback()
+        print(f"Error reporting user: {e}")
+        raise HTTPException(status_code=500, detail="Failed to report user")
+    finally:
+        cursor.close()
 
 @user_router.delete("/delete")
 async def delete_account(token: str = Depends(oauth2_scheme)):
@@ -52,6 +75,62 @@ async def delete_account(token: str = Depends(oauth2_scheme)):
         conn.rollback()
         print(f"Error deleting account: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete account")
+    finally:
+        cursor.close()
+
+@user_router.post("/block")
+async def block_user(body: BlockUserRequest, token: str = Depends(oauth2_scheme)):
+    blocker_id = decode_token(token)
+    blocked_id = body.blocked_user_id
+    cursor = conn.cursor()
+
+    try:
+        # 1. Insert into blocked_users
+        cursor.execute("""
+            INSERT INTO blocked_users (blocker_id, blocked_id)
+            VALUES (%s, %s)
+            ON CONFLICT (blocker_id, blocked_id) DO NOTHING
+        """, (blocker_id, blocked_id))
+
+        # 2. Delete any existing Match
+        cursor.execute("""
+            DELETE FROM matches 
+            WHERE (user1_id = %s AND user2_id = %s) 
+               OR (user1_id = %s AND user2_id = %s)
+        """, (blocker_id, blocked_id, blocked_id, blocker_id))
+
+        # 3. Delete active Chat (and participants via CASCADE usually, or explicit delete)
+        # Find shared chat first
+        cursor.execute("""
+            SELECT c.id 
+            FROM chats c
+            JOIN chat_participants cp1 ON c.id = cp1.chat_id
+            JOIN chat_participants cp2 ON c.id = cp2.chat_id
+            WHERE cp1.user_id = %s AND cp2.user_id = %s
+        """, (blocker_id, blocked_id))
+        
+        chat_rows = cursor.fetchall()
+        for row in chat_rows:
+            chat_id = row[0]
+            # Assuming you want to delete the chat history entirely
+            # If you want to keep history but hide it, you would add a 'status' column instead
+            cursor.execute("DELETE FROM messages WHERE chat_id = %s", (chat_id,))
+            cursor.execute("DELETE FROM chat_participants WHERE chat_id = %s", (chat_id,))
+            cursor.execute("DELETE FROM chats WHERE id = %s", (chat_id,))
+
+        # 4. Remove from discovery pool (optional but recommended)
+        cursor.execute("""
+            DELETE FROM user_discovery_pool 
+            WHERE user_id = %s
+        """, (blocked_id,)) # Logic depends on how your pool works, essentially prevent them seeing each other
+
+        conn.commit()
+        return {"message": "User blocked successfully"}
+
+    except Exception as e:
+        conn.rollback()
+        print(f"Error blocking user: {e}")
+        raise HTTPException(status_code=500, detail="Failed to block user")
     finally:
         cursor.close()
 

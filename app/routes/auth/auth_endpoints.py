@@ -47,7 +47,7 @@ async def verify_otp(data: EmailOTPData):
 def send_otp(email: EmailStr):
     otp = generate_otp()
     store_otp(email, otp)
-    # send_otp_email(email, otp)
+    send_otp_email(email, otp)
     return {"message": "OTP sent",}
 
 @auth_router.post("/token")
