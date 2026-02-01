@@ -2,3 +2,5 @@
 **/*.pyc
 .env
 app.log
+/venv
+/.vscode

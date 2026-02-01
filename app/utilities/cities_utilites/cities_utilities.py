@@ -2,7 +2,7 @@ import json
 
 def search_cities(query: str):
     query_lower = query.lower()
-    with open('constants/all_cities.json', 'r', encoding='utf-8') as file:
+    with open('app/constants/all_cities.json', 'r', encoding='utf-8') as file:
         cities = json.load(file)
 
     results = [
